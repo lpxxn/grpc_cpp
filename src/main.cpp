@@ -14,10 +14,10 @@
 void parseConfig();
 
 int main(int argc, char **argv) {
-    auto logger = utils::rotating_example();
+    auto logger = utils::rotatingExample();
     logger->info("argv[0] {0} {1}", argv[0], "test");
     std::cout << "argv[0]: " << argv[0] << std::endl;
-    utils::rotating_example()->info("hello world!");
+    utils::rotatingExample()->info("hello world!");
 
     CLI::App app{"App description"};
     // Define options

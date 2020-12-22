@@ -2,8 +2,8 @@
 // Created by li on 2020/12/16.
 //
 
-#ifndef HTTP_REQUEST_CONFIG_H
-#define HTTP_REQUEST_CONFIG_H
+#ifndef GRPC_CPP_CONFIG_H
+#define GRPC_CPP_CONFIG_H
 
 namespace conf {
     class config {
@@ -22,4 +22,4 @@ private:
 
 }
 
-#endif //HTTP_REQUEST_CONFIG_H
+#endif //GRPC_CPP_CONFIG_H

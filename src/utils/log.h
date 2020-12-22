@@ -2,13 +2,13 @@
 // Created by li on 2020/12/18.
 //
 
-#ifndef HTTP_REQUEST_UTILS_LOG_H
-#define HTTP_REQUEST_UTILS_LOG_H
+#ifndef GRPC_CPP_UTILS_LOG_H
+#define GRPC_CPP_UTILS_LOG_H
 
 #include <spdlog/sinks/rotating_file_sink.h>
 
 namespace utils {
-    std::shared_ptr<spdlog::logger> rotating_example();
+    std::shared_ptr<spdlog::logger> rotatingExample();
 
 //    class Logger {
 //    public:
@@ -23,4 +23,4 @@ namespace utils {
 //    };
 }
 
-#endif //HTTP_REQUEST_UTILS_LOG_H
+#endif //GRPC_CPP_UTILS_LOG_H

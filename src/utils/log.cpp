@@ -5,7 +5,7 @@
 #include "log.h"
 
 //namespace utils {
-//    std::shared_ptr<spdlog::logger> rotating_example() {
+//    std::shared_ptr<spdlog::logger> rotatingExample() {
 //        // Create a file rotating logger with 5mb size max and 3 rotated files
 //        auto max_size = 1048576 * 5;
 //        auto max_files = 3;
@@ -16,7 +16,7 @@
 
 namespace utils {
     std::shared_ptr<spdlog::logger> real_log = nullptr;
-    std::shared_ptr<spdlog::logger> utils::rotating_example() {
+    std::shared_ptr<spdlog::logger> rotatingExample() {
         if (real_log == nullptr) {
             // Create a file rotating logger with 5mb size max and 3 rotated files
             auto max_size = 1048576 * 5;
