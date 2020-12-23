@@ -1,8 +1,6 @@
-#include <filesystem>
 #include <iostream>
 #include <string>
-#include <ctime>
-#include <regex>
+#include <sstream>
 
 #include <protos/api/student_api.grpc.pb.h>
 #include <grpcpp/create_channel.h>
@@ -20,9 +18,8 @@ using api::StudentSrv;
 
 class SrvClient {
 public:
-    SrvClient(std::shared_ptr<Channel> channel)
-            : _stub(StudentSrv::NewStub(channel)) {
-    }
+    SrvClient(std::shared_ptr<Channel> ch)
+            : _stub(StudentSrv::NewStub(ch)) {}
 
     QueryStudentResponse StudentByID(google::protobuf::int64 id) {
         auto logger = utils::rotatingExample();
@@ -31,9 +28,12 @@ public:
         QueryStudentResponse reply;
         ClientContext ctx;
         Status status = _stub->StudentByID(&ctx, q, &reply);
-        //logger->info(reply.studentlist());
-        if (status.ok()) {
-            return reply;
+        if (!status.ok()) {
+            std::stringstream fmt;
+            fmt << "grpc StudentByID error id: " << id << ", code: " << status.error_code() << " msg: "
+                << status.error_message() << std::endl;
+            std::cout << fmt.str();
+            logger->error(fmt.str());
         }
         return reply;
     }
@@ -45,7 +45,7 @@ private:
 int main(int argc, char **argv) {
     SrvClient client(grpc::CreateChannel(
             "localhost:10001", grpc::InsecureChannelCredentials()));
-    auto reply = client.StudentByID(1);
+    QueryStudentResponse reply = client.StudentByID(1);
     auto s_list = reply.studentlist();
     for (auto &item : s_list) {
         std::cout << "id: " << item.id() << " name: " << item.name() << " age:" << item.age() << std::endl;

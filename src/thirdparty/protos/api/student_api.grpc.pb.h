@@ -4,7 +4,7 @@
 #ifndef GRPC_protos_2fapi_2fstudent_5fapi_2eproto__INCLUDED
 #define GRPC_protos_2fapi_2fstudent_5fapi_2eproto__INCLUDED
 
-#include "student_api.pb.h"
+#include "protos/api/student_api.pb.h"
 
 #include <functional>
 #include <grpc/impl/codegen/port_platform.h>

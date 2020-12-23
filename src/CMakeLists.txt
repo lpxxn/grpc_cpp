@@ -18,7 +18,8 @@ add_executable(${PROJECT_NAME} main.cpp utils/log.cpp
         ${PROJECT_SOURCE_DIR}/src/thirdparty/protos/common.pb.cc
         ${PROJECT_SOURCE_DIR}/src/thirdparty/protos/model/students.pb.cc
         ${PROJECT_SOURCE_DIR}/src/thirdparty/protos/api/student_api.pb.cc
-        ${PROJECT_SOURCE_DIR}/src/thirdparty/protos/api/student_api.grpc.pb.cc)
+        ${PROJECT_SOURCE_DIR}/src/thirdparty/protos/api/student_api.grpc.pb.cc
+)
 
 target_include_directories(${PROJECT_NAME} PUBLIC ${PROJECT_SOURCE_DIR}/include)
 target_include_directories(${PROJECT_NAME} PUBLIC ${PROJECT_SOURCE_DIR}/src/thirdparty)
