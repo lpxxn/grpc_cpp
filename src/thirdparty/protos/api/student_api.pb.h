@@ -32,8 +32,8 @@
 #include <google/protobuf/repeated_field.h>  // IWYU pragma: export
 #include <google/protobuf/extension_set.h>  // IWYU pragma: export
 #include <google/protobuf/unknown_field_set.h>
-#include "protos/common.pb.h"
-#include "protos/model/students.pb.h"
+#include "../common.pb.h"
+#include "../model/students.pb.h"
 // @@protoc_insertion_point(includes)
 #include <google/protobuf/port_def.inc>
 #define PROTOBUF_INTERNAL_EXPORT_protos_2fapi_2fstudent_5fapi_2eproto

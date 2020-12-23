@@ -2,8 +2,8 @@
 // If you make any local change, they will be lost.
 // source: protos/api/student_api.proto
 
-#include "protos/api/student_api.pb.h"
-#include "protos/api/student_api.grpc.pb.h"
+#include "student_api.pb.h"
+#include "student_api.grpc.pb.h"
 
 #include <functional>
 #include <grpcpp/impl/codegen/async_stream.h>
