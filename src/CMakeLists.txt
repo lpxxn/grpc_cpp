@@ -3,8 +3,6 @@ message(STATUS "PROJECT_SOURCE_DIR ${PROJECT_SOURCE_DIR}")
 set(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin) # 二进制文件的输出目录
 
 
-link_directories(${PROJECT_SOURCE_DIR}/lib/restclient-cpp)
-link_directories(${PROJECT_SOURCE_DIR}/lib/yaml-cpp)
 link_directories(${PROJECT_SOURCE_DIR}/lib/spdlog)
 
 find_package(Protobuf CONFIG REQUIRED)
@@ -27,7 +25,4 @@ target_include_directories(${PROJECT_NAME} PUBLIC ${PROJECT_SOURCE_DIR}/src/thir
 
 target_link_libraries(${PROJECT_NAME} Threads::Threads)
 target_link_libraries(${PROJECT_NAME} gRPC::grpc++)
-# target_link_libraries(${PROJECT_NAME} gRPC::grpcpp)
-target_link_libraries(${PROJECT_NAME} restclient-cpp)
-target_link_libraries(${PROJECT_NAME} yaml-cpp.a)
 target_link_libraries(${PROJECT_NAME} spdlog.a)
