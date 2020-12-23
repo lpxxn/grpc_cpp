@@ -1,6 +1,8 @@
 #include <iostream>
 #include <string>
 #include <sstream>
+#include <thread>
+#include <functional>
 
 #include <protos/api/student_api.grpc.pb.h>
 #include <grpcpp/create_channel.h>
@@ -42,14 +44,31 @@ private:
     std::unique_ptr<StudentSrv::Stub> _stub;
 };
 
+void timer_start(std::function<void(void)> func, unsigned int interval) {
+    std::thread([func, interval] {
+        while (true) {
+            func();
+            std::this_thread::sleep_for(std::chrono::milliseconds(interval));
+        }
+    }).detach();
+}
+
 int main(int argc, char **argv) {
     SrvClient client(grpc::CreateChannel(
             "localhost:10001", grpc::InsecureChannelCredentials()));
-    QueryStudentResponse reply = client.StudentByID(1);
-    auto s_list = reply.studentlist();
-    for (auto &item : s_list) {
-        std::cout << "id: " << item.id() << " name: " << item.name() << " age:" << item.age() << std::endl;
-    }
+
+
+    timer_start([&] {
+        QueryStudentResponse reply = client.StudentByID(1);
+        auto s_list = reply.studentlist();
+        if (!s_list.empty()) {
+            std::cout << "do something....." << std::endl;
+        }
+        for (auto &item : s_list) {
+            std::cout << "id: " << item.id() << " name: " << item.name() << " age:" << item.age() << std::endl;
+        }
+    }, 2000);
+    while (true);
     return 0;
 }
 
