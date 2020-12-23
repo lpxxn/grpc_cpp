@@ -4,55 +4,52 @@
 #include <ctime>
 #include <regex>
 
-#include <restclient-cpp/restclient.h>
-#include <yaml-cpp/node/parse.h>
-#include <yaml-cpp/yaml.h>
-#include <CLI/CLI11.hpp>
+#include <protos/api/student_api.grpc.pb.h>
+#include <grpcpp/create_channel.h>
 
 #include "utils/log.h"
 
-void parseConfig();
+using grpc::Channel;
+using grpc::ClientContext;
+using grpc::Status;
+
+using api::QueryStudent;
+using api::QueryStudentResponse;
+using api::StudentSrv;
+
+
+class SrvClient {
+public:
+    SrvClient(std::shared_ptr<Channel> channel)
+            : _stub(StudentSrv::NewStub(channel)) {
+    }
+
+    QueryStudentResponse StudentByID(google::protobuf::int64 id) {
+        auto logger = utils::rotatingExample();
+        QueryStudent q;
+        q.set_id(id);
+        QueryStudentResponse reply;
+        ClientContext ctx;
+        Status status = _stub->StudentByID(&ctx, q, &reply);
+        //logger->info(reply.studentlist());
+        if (status.ok()) {
+            return reply;
+        }
+        return reply;
+    }
+
+private:
+    std::unique_ptr<StudentSrv::Stub> _stub;
+};
 
 int main(int argc, char **argv) {
-    auto logger = utils::rotatingExample();
-    logger->info("argv[0] {0} {1}", argv[0], "test");
-    std::cout << "argv[0]: " << argv[0] << std::endl;
-    utils::rotatingExample()->info("hello world!");
-
-    CLI::App app{"App description"};
-    // Define options
-    int p = 0;
-    app.add_option("-p", p, "Parameter");
-    CLI11_PARSE(app, argc, argv);
-
-    std::cout << "Parameter value: " << p << std::endl;
-
-    std::cout << "Hello, World!" << std::endl;
-    RestClient::init();
-    RestClient::Response r = RestClient::get("https://www.baidu.com");
-    std::cout << r.body << std::endl;
-    auto a = 1;
-    time_t t = time(nullptr);
-    tm *local_time = localtime(&t);
-    std::cout << "hour: " << local_time->tm_hour << " min: " << local_time->tm_min << std::endl;
-
-    auto s = std::to_string(1);
-    int n_zero(2);
-    auto dest = std::string(n_zero - s.length(), '0').append(s);
-    auto min_str = std::to_string(local_time->tm_min);
-    std::cout << "fill zero: " << dest << " current min: "
-              << std::string(n_zero - min_str.length(), '0').append(min_str) << std::endl;
-    parseConfig();
-    return 0;
-}
-
-void parseConfig() {
-    std::filesystem::path config_path = std::__fs::filesystem::current_path() / "config.yaml";
-    std::cout << config_path << std::endl;
-    YAML::Node config = YAML::LoadFile(config_path);
-
-    if (config["lastLogin"]) {
-        std::cout << "Last logged in: " << config["lastLogin"].as<std::string>() << "\n";
+    SrvClient client(grpc::CreateChannel(
+            "localhost:10001", grpc::InsecureChannelCredentials()));
+    auto reply = client.StudentByID(1);
+    auto s_list = reply.studentlist();
+    for (auto &item : s_list) {
+        std::cout << "id: " << item.id() << " name: " << item.name() << " age:" << item.age() << std::endl;
     }
+    return 0;
 }
 

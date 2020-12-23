@@ -1,6 +1,4 @@
 cmake_minimum_required(VERSION 3.17)
-#set(CMAKE_C_COMPILER "gcc")
-#set(CMAKE_CXX_COMPILER "g++")
 project(grpc_cpp VERSION 0.0.1)
 
 include(CheckCXXCompilerFlag)
