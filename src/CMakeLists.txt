@@ -15,7 +15,7 @@ message(STATUS "Using gRPC ${gRPC_VERSION}")
 
 find_package(Threads REQUIRED)
 
-add_executable(${PROJECT_NAME} main.cpp utils/log.cpp ../include/protos/common.pb.cc ../include/protos/model/students.pb.cc ../include/protos/api/student_api.pb.cc ../include/protos/api/student_api.grpc.pb.cc)
+add_executable(${PROJECT_NAME} main.cpp utils/log.cpp ${PROJECT_SOURCE_DIR}/include/protos/common.pb.cc ${PROJECT_SOURCE_DIR}/include/protos/model/students.pb.cc ${PROJECT_SOURCE_DIR}/include/protos/api/student_api.pb.cc ${PROJECT_SOURCE_DIR}/include/protos/api/student_api.grpc.pb.cc)
 
 target_include_directories(${PROJECT_NAME} PUBLIC ${PROJECT_SOURCE_DIR}/include)
 
