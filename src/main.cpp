@@ -64,6 +64,8 @@ int main(int argc, char **argv) {
         auto s_list = reply.studentlist();
         if (!s_list.empty()) {
             std::cout << "do something....." << std::endl;
+        } else {
+            std::cout << "no data" << std::endl;
         }
         for (auto &item : s_list) {
             std::cout << "id: " << item.id() << " name: " << item.name() << " age:" << item.age() << std::endl;
